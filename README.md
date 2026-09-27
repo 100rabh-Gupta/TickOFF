@@ -1,6 +1,6 @@
 <div align="center">
 
-# TaskFlow
+# TickOFF
 
 **A full-stack task manager built with FastAPI, SQLAlchemy and React 19.**
 
@@ -31,8 +31,8 @@ TODO: add real screenshots — this is the first thing recruiters look at.
   3. Save as docs/screenshot-light.png and docs/screenshot-dark.png, then uncomment:
 
 <p align="center">
-  <img src="docs/screenshot-light.png" alt="TaskFlow – light mode" width="49%">
-  <img src="docs/screenshot-dark.png"  alt="TaskFlow – dark mode"  width="49%">
+  <img src="docs/screenshot-light.png" alt="TickOFF – light mode" width="49%">
+  <img src="docs/screenshot-dark.png"  alt="TickOFF – dark mode"  width="49%">
 </p>
 -->
 
@@ -105,7 +105,7 @@ flowchart LR
 ## Project structure
 
 ```text
-TASKFLOW/
+TICKOFF/
 ├── backend/
 │   ├── main.py            # FastAPI app factory: CORS, router registration, health route
 │   ├── crud.py            # /todo router (list · create · update · delete) + Pydantic schemas
@@ -232,7 +232,7 @@ Interactive docs with "Try it out" are always available at `/docs`.
 Things in this codebase that go beyond a basic CRUD tutorial:
 
 - **Optimistic UI with rollback.** `handleToggleDone` flips the checkbox in local state immediately, sends the `PUT`, replaces the item with the server's canonical version on success, and re-fetches the list on failure so the UI never drifts from the database.
-- **Defensive response handling.** Every fetch checks `res.ok`, and the list is guarded with `Array.isArray` before rendering. This came out of a real production bug — an unexpected non-array payload caused a blank screen on reload — and the fix is [commit `37c9a93`](https://github.com/100rabh-Gupta/TASKFLOW/commit/37c9a9379fe9b65a633194d2e7bb64ef987570d5).
+- **Defensive response handling.** Every fetch checks `res.ok`, and the list is guarded with `Array.isArray` before rendering. This came out of a real production bug — an unexpected non-array payload caused a blank screen on reload — and the fix is committed at [37c9a9379fe9b6a633194d2e7bb64ef987570d5](https://github.com/100rabh-Gupta/TickOFF/commit/37c9a9379fe9b6a633194d2e7bb64ef987570d5).
 - **Environment-aware API base URL.** `getApiBaseUrl()` normalises `VITE_API_URL` (trailing slashes, optional `/todo` suffix) and falls back to a relative path that the Vite proxy handles in development — one code path for local and production.
 - **Dependency-injected DB sessions.** `get_db` yields a session per request and always closes it in `finally`; endpoints declare `response_model`s so FastAPI validates output and generates accurate OpenAPI docs for free.
 - **Clear backend layering.** App wiring (`main.py`), routes + schemas (`crud.py`), ORM model (`model.py`) and engine/session (`database.py`) live in separate modules, with a router prefix and tags so the API can grow without touching `main.py`.
